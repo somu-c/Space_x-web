@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceX - Making Life Multiplanetary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            color: #e8eaf6;
+            overflow-x: hidden;
+        }
+
+       
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(10,14,39,0.95), rgba(25,35,70,0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%230a0e27"/><circle cx="100" cy="100" r="2" fill="%23667eea" opacity="0.8"/><circle cx="300" cy="150" r="1" fill="%23764ba2" opacity="0.6"/><circle cx="500" cy="80" r="1.5" fill="%235b7cff" opacity="0.7"/><circle cx="700" cy="200" r="1" fill="%238e54e9" opacity="0.5"/><circle cx="900" cy="120" r="2" fill="%236366f1" opacity="0.8"/><circle cx="1100" cy="180" r="1" fill="%237c3aed" opacity="0.6"/><circle cx="200" cy="400" r="1" fill="%235b7cff" opacity="0.7"/><circle cx="400" cy="500" r="1.5" fill="%23667eea" opacity="0.8"/><circle cx="600" cy="450" r="1" fill="%238e54e9" opacity="0.6"/><circle cx="800" cy="550" r="2" fill="%23764ba2" opacity="0.7"/><circle cx="1000" cy="480" r="1" fill="%236366f1" opacity="0.5"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            font-size: 16px;
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        
+        .timeline-section {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, #1a1d3a 0%, #0f1229 50%, #1a1d3a 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #667eea, #764ba2, #f093fb);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 30px;
+            background: rgba(102, 126, 234, 0.08);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            background: rgba(102, 126, 234, 0.12);
+        }
+
+        .timeline-date {
+            color: #f093fb;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        
+        .missions-section {
+            padding: 100px 50px;
+            background: #000;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mission-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+
+        .mission-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .mission-info {
+            padding: 30px;
+        }
+
+        .mission-info h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .mission-info p {
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .mission-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f093fb;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.7;
+            text-transform: uppercase;
+        }
+
+        
+        .stats-section {
+            padding: 80px 50px;
+            background: linear-gradient(135deg, #1a1d3a, #0f1229);
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-box {
+            animation: countUp 2s ease-out;
+        }
+
+        .stat-number {
+            font-size: 56px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00d4ff, #0099ff, #0066cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .stat-text {
+            font-size: 18px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        
+        footer {
+            padding: 50px;
+            text-align: center;
+            background: #0a0e27;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        footer p {
+            opacity: 0.6;
+        }
+
+        .components-section {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, #0f1229 0%, #1a1d3a 100%);
+        }
+
+        .components-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .component-card {
+            background: rgba(102, 126, 234, 0.08);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .component-card:hover {
+            transform: translateY(-10px);
+            background: rgba(102, 126, 234, 0.12);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+
+        .component-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .component-card h3 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .component-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .component-specs {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 20px;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .spec-item {
+            font-size: 12px;
+            color: #f093fb;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        
+        .feedback-section {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1d3a 100%);
+        }
+
+        .feedback-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .form-intro h3 {
+            font-size: 32px;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .form-intro p {
+            opacity: 0.8;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(102, 126, 234, 0.08);
+            border-radius: 10px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s;
+        }
+
+        .info-item:hover {
+            background: rgba(102, 126, 234, 0.12);
+            transform: translateX(10px);
+        }
+
+        .info-icon {
+            font-size: 24px;
+        }
+
+        .feedback-form {
+            background: rgba(102, 126, 234, 0.08);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 14, 39, 0.6);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 8px;
+            color: #e8eaf6;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .form-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .form-status.success {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: #00d4ff;
+            display: block;
+        }
+
+        .form-status.error {
+            background: rgba(255, 82, 82, 0.1);
+            border: 1px solid rgba(255, 82, 82, 0.3);
+            color: #ff5252;
+            display: block;
+        }
+
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                justify-content: flex-end !important;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feedback-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .components-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav>
+        <div class="logo">SPACE-X</div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#timeline">Timeline</a></li>
+            <li><a href="#missions">Missions</a></li>
+            <li><a href="#stats">Stats</a></li>
+            <li><a href="#components">Rocket Parts</a></li>
+            <li><a href="#feedback">Contact</a></li>
+        </ul>
+    </nav>
+
+   
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>MAKING LIFE MULTIPLANETARY</h1>
+            <p>Revolutionizing Space Technology for Humanity</p>
+            <button class="cta-button">Explore Missions</button>
+        </div>
+    </section>
+
+   
+    <section class="timeline-section" id="timeline">
+        <h2 class="section-title">Mission Timeline</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">JUNE 2010</div>
+                    <h3>Falcon 9 First Launch</h3>
+                    <p>Successfully completed the first launch of Falcon 9, marking a new era in commercial spaceflight.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">MAY 2012</div>
+                    <h3>Dragon ISS Mission</h3>
+                    <p>Dragon became the first commercial spacecraft to deliver cargo to the International Space Station.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">DECEMBER 2015</div>
+                    <h3>First Stage Landing</h3>
+                    <p>Achieved the first successful landing of an orbital rocket's first stage, revolutionizing reusability.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">MAY 2020</div>
+                    <h3>Crew Dragon Launch</h3>
+                    <p>First crewed mission to ISS, returning human spaceflight capabilities to the United States.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <section class="missions-section" id="missions">
+        <h2 class="section-title">Active Missions</h2>
+        <div class="mission-grid">
+            <div class="mission-card">
+                <div class="mission-image">🚀</div>
+                <div class="mission-info">
+                    <h3>Starship</h3>
+                    <p>A fully reusable transportation system designed to carry crew and cargo to Earth orbit, the Moon, Mars, and beyond.</p>
+                    <div class="mission-stats">
+                        <div class="stat">
+                            <div class="stat-value">100+</div>
+                            <div class="stat-label">Tons Payload</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">100</div>
+                            <div class="stat-label">Passengers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mission-card">
+                <div class="mission-image">🛰️</div>
+                <div class="mission-info">
+                    <h3>Starlink</h3>
+                    <p>Global satellite internet constellation providing high-speed, low-latency broadband connectivity worldwide.</p>
+                    <div class="mission-stats">
+                        <div class="stat">
+                            <div class="stat-value">5,000+</div>
+                            <div class="stat-label">Satellites</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">60+</div>
+                            <div class="stat-label">Countries</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mission-card">
+                <div class="mission-image">🌙</div>
+                <div class="mission-info">
+                    <h3>Artemis Program</h3>
+                    <p>NASA's mission to return humans to the Moon, with SpaceX providing the Human Landing System.</p>
+                    <div class="mission-stats">
+                        <div class="stat">
+                            <div class="stat-value">2026</div>
+                            <div class="stat-label">Target Year</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">First</div>
+                            <div class="stat-label">Woman on Moon</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="stats-section" id="stats">
+        <h2 class="section-title">By The Numbers</h2>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">300+</div>
+                <div class="stat-text">Total Launches</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">250+</div>
+                <div class="stat-text">Landings</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">200+</div>
+                <div class="stat-text">Reflights</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">50+</div>
+                <div class="stat-text">Crew Missions</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="components-section" id="components">
+        <h2 class="section-title">Rocket Architecture</h2>
+        <div class="components-container">
+            <div class="component-card">
+                <div class="component-icon"></div>
+                <h3>Payload Fairing</h3>
+                <p>Protects satellites and cargo during ascent. The composite fairing jettisons at approximately 3 minutes into flight.</p>
+                <div class="component-specs">
+                    <span class="spec-item">Height: 13.1m</span>
+                    <span class="spec-item">Diameter: 5.2m</span>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <div class="component-icon"></div>
+                <h3>First Stage</h3>
+                <p>Nine Merlin engines providing 7,607 kN of thrust at liftoff. Fully reusable with autonomous landing capability.</p>
+                <div class="component-specs">
+                    <span class="spec-item">Engines: 9 Merlin</span>
+                    <span class="spec-item">Reusable: Yes</span>
+                </div>
+            </div>
+
+            <div class="component-card">
+                <div class="component-icon"></div>
+                <h3>Second Stage</h3>
+                <p>Single Merlin Vacuum engine optimized for space operations. Responsible for delivering payload to precise orbit.</p>
+                <div class="component-specs">
+                    <span class="spec-item">Thrust: 981 kN</span>
+                    <span class="spec-item">Fuel: RP-1/LOX</span>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <div class="component-icon"></div>
+                <h3>Landing Legs</h3>
+                <p>Four carbon fiber and aluminum honeycomb landing legs deploy for precision landing on drone ships or landing zones.</p>
+                <div class="component-specs">
+                    <span class="spec-item">Material: Carbon Fiber</span>
+                    <span class="spec-item">Count: 4 Legs</span>
+                </div>
+            </div>
+            <div class="component-card">
+                <div class="component-icon"></div>
+                <h3>Grid Fins</h3>
+                <p>Titanium grid fins provide aerodynamic control during atmospheric reentry and landing approach.</p>
+                <div class="component-specs">
+                    <span class="spec-item">Material: Titanium</span>
+                    <span class="spec-item">Function: Guidance</span>
+                </div>
+            </div>
+            <div class="component-card">
+                <div class="component-icon"></div>
+                <h3>Propellant Tanks</h3>
+                <p>Aluminum-lithium alloy tanks store RP-1 kerosene and liquid oxygen at cryogenic temperatures.</p>
+                <div class="component-specs">
+                    <span class="spec-item">Capacity: 411,000L</span>
+                    <span class="spec-item">Temp: -207°C</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="feedback-section" id="feedback">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="feedback-container">
+            <div class="form-intro">
+                <h3>Share Your Feedback</h3>
+                <p>Have questions about the project or want to collaborate? I'd love to hear from you!</p>
+                <div class="contact-info">
+                    
+                </div>
+            </div>
+            <form class="feedback-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a topic</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="collaboration">Collaboration Opportunity</option>
+                        <option value="feedback">Project Feedback</option>
+                        <option value="job">Job Opportunity</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Your message here..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+                <div class="form-status" id="formStatus"></div>
+            </form>
+        </div>
+    </section>
+
+    
+    <footer>
+        <p>&copy; 2023 SpaceX Demo.</p>
+    </footer>
+
+    <script>
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item, .mission-card, .stat-box').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(el);
+        });
+
+       
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+
+           
+            formStatus.className = 'form-status success';
+            formStatus.textContent = 'Thank you! Your message has been sent successfully. I will get back to you soon.';
+            
+            
+            contactForm.reset();
+
+           
+            setTimeout(() => {
+                formStatus.style.display = 'none';
+            }, 5000);
+        });
+
+        
+        document.querySelectorAll('.component-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
